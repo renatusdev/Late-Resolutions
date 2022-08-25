@@ -16,20 +16,15 @@ namespace Entities.Enemies.Dagon_Statue {
         [SerializeField] [Range(0.1f, 1)] private float projectileFrequency = 0.5f;
 
         [Header("FXs")]
-        [SerializeField] private FXSystem energyGatheringFX;
         [SerializeField] private FXSystem onAttackFX;
         
         [Header("Tools")]
         [SerializeField] private OnTriggerEventHelper triggerEventHelper;
-        [SerializeField] private Pool projectilesPool;
         [SerializeField] private Collider statueCollider;
         
         public OnTriggerEventHelper OnTriggerEventHelper => triggerEventHelper;
-        public Pool ProjectilesPool => projectilesPool;
         public Collider StatueCollider => statueCollider;
-        public FXSystem EnergyGatheringFX => energyGatheringFX;
         public FXSystem OnAttackFX => onAttackFX;
-        public float ProjectileFrequency => projectileFrequency;
 
         public DagonStatueWatchState WatchState     { get; private set; }
         public DagonStatueAttackState AttackState   { get; private set; }
