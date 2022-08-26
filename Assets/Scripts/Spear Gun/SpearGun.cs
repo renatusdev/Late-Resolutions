@@ -1,4 +1,5 @@
 using Cinemachine;
+using Entities.Player;
 using Plugins.Renatus.Util;
 using Plugins.Renatus.Util.State_Machine;
 using UnityEngine;
