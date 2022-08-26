@@ -20,12 +20,11 @@ public class SpearGunReadyState : IBaseState {
     }
 
     public void AimOn() {
-        _spearGun.PlayerController.Animator.SetBool("isAiming", true);
-        _spearGun.PlayerController.CameraController.SetFOV(75, 0.4f);
+        _spearGun.Player.AimOn();
+    
     }
 
     public void AimOff() {
-        _spearGun.PlayerController.Animator.SetBool("isAiming", false);
-        _spearGun.PlayerController.CameraController.SetFOV(90, 0.2f);
+        _spearGun.Player.AimOff();
     }
 }

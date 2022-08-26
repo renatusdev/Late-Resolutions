@@ -14,7 +14,7 @@ namespace Managers {
 		public const string PlayerTag = "Player";
 		public const string WeaponTag = "Weapon";
 
-		[SerializeField] private PlayerController player;
+		[SerializeField] private Player player;
 		[SerializeField] private CameraController cameraController;
 
 
@@ -23,7 +23,7 @@ namespace Managers {
 		[Header("Enemy Entities")]
 		[SerializeField] private DagonStatue dagonStatue;
 		
-		public PlayerController Player => player;
+		public Player Player => player;
 		public bool HasFocusOn { get; private set; }
 		
 		#endregion

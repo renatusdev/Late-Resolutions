@@ -11,9 +11,9 @@ namespace Entities.Enemies.Dagon_Statue {
 
         #region Fields & Properties
 
-        [Header("Properties")]
-        [Tooltip("The amount of projectiles to shoot per second.")]
-        [SerializeField] [Range(0.1f, 1)] private float projectileFrequency = 0.5f;
+        // [Header("Properties")]
+        // [Tooltip("The amount of projectiles to shoot per second.")]
+        // [SerializeField] [Range(0.1f, 1)] private float projectileFrequency = 0.5f;
 
         [Header("FXs")]
         [SerializeField] private FXSystem onAttackFX;

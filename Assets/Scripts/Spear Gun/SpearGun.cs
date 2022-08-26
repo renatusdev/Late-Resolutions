@@ -31,7 +31,7 @@ namespace Spear_Gun {
         public SpearGunShootingState ShootingState { get; private set; }
         public SpearGunStaggeredState StaggeredState { get; private set; }
 
-        public PlayerController PlayerController { get; private set; }
+        public Player Player { get; private set; }
         public CinemachineImpulseSource ImpulseSource => m_ImpulseSource;
         public Crosshair CrossHair => m_Crosshair;
 
@@ -56,8 +56,8 @@ namespace Spear_Gun {
 
         #region Public Functions
 
-        public void Initialize(PlayerController playerController) {
-            PlayerController = playerController;
+        public void Initialize(Player player) {
+            Player = player;
         
             ReadyState = new SpearGunReadyState(this);
             ReloadingState = new SpearGunReloadingState(this, m_SpearPool);

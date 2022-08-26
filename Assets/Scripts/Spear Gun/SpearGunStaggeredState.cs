@@ -30,7 +30,7 @@ namespace Spear_Gun {
         
             m_SpearGun.ImpulseSource.GenerateImpulse(Camera.main.transform.forward);
             // Is this no bueno?
-            m_SpearGun.PlayerController.Animator.Play("Staggered");
+            m_SpearGun.Player.Animator.Play("Staggered");
         }
 
         public void Exit() {

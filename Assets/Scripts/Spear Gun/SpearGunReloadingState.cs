@@ -30,7 +30,7 @@ namespace Spear_Gun {
         public void Enter() {
             t = 0;
         
-            m_SpearGun.PlayerController.Animator.Play("Reloading");
+            m_SpearGun.Player.Animator.Play("Reloading");
         }
 
         public void Exit() {
