@@ -27,6 +27,8 @@ namespace Entities.Player {
 
         public Animator Animator => animator;
         public CameraController CameraController => cameraController;
+        public PlayerMovement Movement => playerMovement;
+        public PlayerShooting Shooting => playerShooting;
 
         private Tweener _lookAtTween;
         private Vector3 _movementInput;

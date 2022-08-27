@@ -44,7 +44,7 @@ namespace Entities.Enemies.Breachers {
 			
 			var anchor = _breacher.transform.position;
 			var tip = _breacher.Target.position;
-			var playerPredictedPosition = _breacher.GameManager.Player.GetPredictedPosition(PlayerVelocityPredictionMagnitude);
+			var playerPredictedPosition = _breacher.GameManager.Player.Movement.GetPredictedPosition(PlayerVelocityPredictionMagnitude);
 			var strikePositionA = _breacher.CreateStrikePosition(playerPredictedPosition);
 			var strikePositionB = (anchor - tip).normalized + anchor;
 
