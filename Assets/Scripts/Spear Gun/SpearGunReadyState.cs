@@ -20,11 +20,10 @@ public class SpearGunReadyState : IBaseState {
     }
 
     public void AimOn() {
-        _spearGun.Player.AimOn();
-    
+        _spearGun.Player.Aim.AimOn();
     }
 
     public void AimOff() {
-        _spearGun.Player.AimOff();
+        _spearGun.Player.Aim.AimOff();
     }
 }

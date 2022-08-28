@@ -26,20 +26,20 @@ namespace Entities.Player {
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private CharacterController characterController;
         
-        [Header("Submarine References")]
+        [Header("???")]
         [SerializeField] private SpearGun spearGun;
 
-        public Animator Animator => animator;
-        public CameraController CameraController => cameraController;
+        // Component & Fields References
         public CharacterController CharacterController => characterController;
+        public CameraController CameraController => cameraController;
+        public Animator Animator => animator;
         public float Speed => speed;
         
+        // Behaviors
         public PlayerMovement Movement { get; set; }
-        public PlayerShooting Shooting { get; set; }
+        public PlayerAim Aim { get; set; }
         
         private Tweener _lookAtTween;
-        private Vector3 _movementInput;
-        private float _rollAxis;
 
         #endregion
 
@@ -49,13 +49,18 @@ namespace Entities.Player {
             spearGun.Initialize(this);
             
             Movement = new PlayerMovement(this);
-            Shooting = new PlayerShooting(this);
+            Aim = new PlayerAim(this);
             
             EnableInput();
         }
         
         private void OnDisable() {
             DisableInput();
+        }
+
+        private void Update() {
+            Movement.Move();
+            Aim.Look();
         }
 
         #endregion
@@ -71,33 +76,15 @@ namespace Entities.Player {
         }
 
         #endregion
-
-        #region Action Functions
-
-        #endregion
-
-        #region Event Functions
         
-        public void AimOn() {
-            Animator.SetBool("isAiming", true);
-            CameraController.SetFOV(75, 0.4f);        
-        }
-        
-        public void AimOff() {
-            Animator.SetBool("isAiming", false);
-            CameraController.SetFOV(90, 0.2f);
-        }
-
-        #endregion
-
         #region Private Functions
     
         private void EnableInput() {
             
-            playerInput.actions["Move"].performed += Movement.Move;
-            playerInput.actions["Move"].canceled += Movement.Move;
+            playerInput.actions["Move"].performed += Movement.GetInput;
+            playerInput.actions["Move"].canceled += Movement.GetInput;
             
-            playerInput.actions["Look"].performed += Shooting.Look;
+            playerInput.actions["Look"].performed += Aim.GetInput;
             
             // TODO: Abstract this to a IWeapon.
             playerInput.actions["Aim"].started += spearGun.AimOn;
@@ -107,10 +94,10 @@ namespace Entities.Player {
         }
 
         private void DisableInput() {
-            playerInput.actions["Move"].performed += Movement.Move;
-            playerInput.actions["Move"].canceled += Movement.Move;
+            playerInput.actions["Move"].performed += Movement.GetInput;
+            playerInput.actions["Move"].canceled += Movement.GetInput;
             
-            playerInput.actions["Look"].performed -= Shooting.Look;
+            playerInput.actions["Look"].performed -= Aim.GetInput;
 
             // TODO: Abstract this to a IWeapon.
             playerInput.actions["Aim"].started -= spearGun.AimOn;

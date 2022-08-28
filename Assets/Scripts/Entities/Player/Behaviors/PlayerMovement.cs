@@ -7,27 +7,21 @@ namespace Entities.Player.Behaviors {
     {
         private const float SpeedMultiplier = 10;
         private readonly Player _player;
-        private Vector3 _movementInput;
+        private Vector3 _inputMovement;
         
         public PlayerMovement(Player player) {
             _player = player;
         }
-
-        /// <summary>
-        /// An event called by the PlayerInput component holding the Move action 2D Axis values.
-        /// Note: Since PlayerInput calls this at frames asynchronous from the Update() method,
-        /// the multipliers to make velocity framerate independent are calculated in the Move() function
-        /// inside the Update method, which runs once per frame. 
-        /// </summary>
-        public void Move(InputAction.CallbackContext context) {
-            // var input = context.ReadValue<Vector2>();
-            //
-            // _player.Animator.SetBool("isForward", input.y >= 0.7f);
-            // _movementInput = new Vector3(input.x, 0, input.y);
+        
+        internal void GetInput(InputAction.CallbackContext context) {
+            var input = context.ReadValue<Vector2>();
+            
+            _player.Animator.SetBool("isForward", input.y >= 0.7f);
+            _inputMovement = new Vector3(input.x, 0, input.y);
         }
 
-        private void Move(Vector3 velocity) {
-            velocity = _player.transform.TransformDirection(velocity);
+        internal void Move() {
+            var velocity = _player.transform.TransformDirection(_inputMovement);
             velocity *= _player.Speed * SpeedMultiplier;
             velocity *= Time.deltaTime;
         
