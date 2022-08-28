@@ -1,13 +1,7 @@
-using System;
-using DG.Tweening;
 using Entities.Player.Behaviors;
 using Spear_Gun;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
-using Quaternion = UnityEngine.Quaternion;
-using Vector2 = UnityEngine.Vector2;
-using Vector3 = UnityEngine.Vector3;
 
 // TODO(Sergio): Mouse Sensitivity field from settings.
 namespace Entities.Player {
@@ -33,14 +27,14 @@ namespace Entities.Player {
         public CharacterController CharacterController => characterController;
         public CameraController CameraController => cameraController;
         public Animator Animator => animator;
+        public PlayerInput Input => playerInput;
+        
         public float Speed => speed;
         
         // Behaviors
         public PlayerMovement Movement { get; set; }
         public PlayerAim Aim { get; set; }
         
-        private Tweener _lookAtTween;
-
         #endregion
 
         #region Unity Functions
@@ -65,45 +59,33 @@ namespace Entities.Player {
 
         #endregion
 
-        #region Public Functions
-
-        public void LookAt(Vector3 target, float duration, Ease ease, TweenCallback callback) {
-            _lookAtTween ??= transform.DOLookAt(target, duration).SetEase(ease).OnComplete(() => {
-                callback?.Invoke();
-                // Shooting.RefreshMouseToRotation(); // TODO: This should not go here right?!?!?!??!?!
-                _lookAtTween = null;
-            }); 
-        }
-
-        #endregion
-        
         #region Private Functions
     
         private void EnableInput() {
             
-            playerInput.actions["Move"].performed += Movement.GetInput;
-            playerInput.actions["Move"].canceled += Movement.GetInput;
+            Input.actions["Move"].performed += Movement.GetInput;
+            Input.actions["Move"].canceled += Movement.GetInput;
             
-            playerInput.actions["Look"].performed += Aim.GetInput;
+            Input.actions["Look"].performed += Aim.GetInput;
             
             // TODO: Abstract this to a IWeapon.
-            playerInput.actions["Aim"].started += spearGun.AimOn;
-            playerInput.actions["Aim"].canceled += spearGun.AimOff;
-            playerInput.actions["Shoot"].performed += spearGun.Shoot;
-            playerInput.actions["Reload"].performed += spearGun.Reload;
+            Input.actions["Aim"].started += spearGun.AimOn;
+            Input.actions["Aim"].canceled += spearGun.AimOff;
+            Input.actions["Shoot"].performed += spearGun.Shoot;
+            Input.actions["Reload"].performed += spearGun.Reload;
         }
 
         private void DisableInput() {
-            playerInput.actions["Move"].performed += Movement.GetInput;
-            playerInput.actions["Move"].canceled += Movement.GetInput;
+            Input.actions["Move"].performed += Movement.GetInput;
+            Input.actions["Move"].canceled += Movement.GetInput;
             
-            playerInput.actions["Look"].performed -= Aim.GetInput;
+            Input.actions["Look"].performed -= Aim.GetInput;
 
             // TODO: Abstract this to a IWeapon.
-            playerInput.actions["Aim"].started -= spearGun.AimOn;
-            playerInput.actions["Aim"].canceled -= spearGun.AimOff;
-            playerInput.actions["Shoot"].performed += spearGun.Shoot;
-            playerInput.actions["Reload"].performed -= spearGun.Reload;
+            Input.actions["Aim"].started -= spearGun.AimOn;
+            Input.actions["Aim"].canceled -= spearGun.AimOff;
+            Input.actions["Shoot"].performed += spearGun.Shoot;
+            Input.actions["Reload"].performed -= spearGun.Reload;
         }
 
         #endregion

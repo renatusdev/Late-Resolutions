@@ -1,3 +1,5 @@
+using System;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,10 +10,11 @@ namespace Entities.Player.Behaviors {
         private const float MouseSensitivity = 0.1f;
         private const bool MouseInvertedY = false;
     
+        private readonly Player _player;
+        
         private Vector2 _mouseRotation;
         private Vector3 _inputMouseDelta;
-        
-        private readonly Player _player;
+        private Tweener _lookAtTween;
         
         public PlayerAim(Player player) {
             _player = player;
@@ -43,8 +46,16 @@ namespace Entities.Player.Behaviors {
             _player.Animator.SetBool("isAiming", false);
             _player.CameraController.SetFOV(90, 0.2f);
         }
+
+        public void FocusOn(Vector3 target, float duration, Ease ease, Action callback) {
+            _lookAtTween ??= _player.transform.DOLookAt(target, duration).SetEase(ease).OnComplete(() => {
+                callback?.Invoke();
+                RefreshMouseToRotation();
+                _lookAtTween = null;
+            }); 
+        }
         
-        internal void RefreshMouseToRotation() {
+        private void RefreshMouseToRotation() {
             var rotation = _player.transform.rotation.eulerAngles;
         
             _mouseRotation.x = rotation.y;

@@ -47,7 +47,7 @@ namespace Managers {
 			if (HasFocusOn) return;
 			
 			HasFocusOn = true;
-			player.LookAt(target, duration, ease, () => {
+			player.Aim.FocusOn(target, duration, ease, () => {
 				HasFocusOn = false;
 				callback?.Invoke();
 			});
