@@ -1,52 +1,44 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Entities.Player {
+namespace Entities.Player.Behaviors {
 
-    /// <summary> Handles player movement. </summary>
-    public class PlayerMovement : MonoBehaviour
+    public class PlayerMovement
     {
-        [Header("Properties")]
-        [Range(0, 1)]
-        [SerializeField] private float movementSpeed;
-        
-        [Header("General References")]  [Space(20)]
-        [SerializeField] private CharacterController characterController;
-
-        
         private const float SpeedMultiplier = 10;
+        private readonly Player _player;
         private Vector3 _movementInput;
         
-        internal void Initialize(Player controller) {
-            
+        public PlayerMovement(Player player) {
+            _player = player;
         }
-        
+
         /// <summary>
         /// An event called by the PlayerInput component holding the Move action 2D Axis values.
         /// Note: Since PlayerInput calls this at frames asynchronous from the Update() method,
         /// the multipliers to make velocity framerate independent are calculated in the Move() function
         /// inside the Update method, which runs once per frame. 
         /// </summary>
-        internal void Move(InputAction.CallbackContext context) {
-            Vector2 input = context.ReadValue<Vector2>();
-        
-            // animator.SetBool("isForward", input.y >= 0.7f);
-            _movementInput = new Vector3(input.x, 0, input.y);
+        public void Move(InputAction.CallbackContext context) {
+            // var input = context.ReadValue<Vector2>();
+            //
+            // _player.Animator.SetBool("isForward", input.y >= 0.7f);
+            // _movementInput = new Vector3(input.x, 0, input.y);
         }
 
         private void Move(Vector3 velocity) {
-            velocity = transform.TransformDirection(velocity);
-            velocity *= movementSpeed * SpeedMultiplier;
+            velocity = _player.transform.TransformDirection(velocity);
+            velocity *= _player.Speed * SpeedMultiplier;
             velocity *= Time.deltaTime;
         
-            characterController.Move(velocity);
+            _player.CharacterController.Move(velocity);
         }
 
         #region Public Functions
         
         /// <summary> Returns a predicted player position given the time ahead to predict to. </summary>
         public Vector3 GetPredictedPosition(float timeAhead) {
-            return timeAhead * characterController.velocity + transform.position;
+            return timeAhead * _player.CharacterController.velocity + _player.transform.position;
         }
         
         /// <summary> Add a direction and force to factor in for this frame of the velocity. </summary>
@@ -55,6 +47,5 @@ namespace Entities.Player {
         }
 
         #endregion
-
     }
 }

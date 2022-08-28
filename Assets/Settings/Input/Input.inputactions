@@ -2,7 +2,7 @@
     "name": "Input",
     "maps": [
         {
-            "name": "Submarine",
+            "name": "Player",
             "id": "ba642dac-ed27-4282-ae30-c7a59c4a8f8c",
             "actions": [
                 {

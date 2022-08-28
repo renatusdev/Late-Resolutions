@@ -4,6 +4,7 @@ using Entities.Player.Behaviors;
 using Spear_Gun;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.TextCore.Text;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -15,21 +16,27 @@ namespace Entities.Player {
     
         #region Fields
         
+        [Header("Properties")]
+        [Range(0, 1)]
+        [SerializeField] private float speed;
+        
         [Header("General References")]
         [SerializeField] private Animator animator;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PlayerInput playerInput;
-        [SerializeField] private PlayerMovement playerMovement;
-        [SerializeField] private PlayerShooting playerShooting;
-
+        [SerializeField] private CharacterController characterController;
+        
         [Header("Submarine References")]
         [SerializeField] private SpearGun spearGun;
 
         public Animator Animator => animator;
         public CameraController CameraController => cameraController;
-        public PlayerMovement Movement => playerMovement;
-        public PlayerShooting Shooting => playerShooting;
-
+        public CharacterController CharacterController => characterController;
+        public float Speed => speed;
+        
+        public PlayerMovement Movement { get; set; }
+        public PlayerShooting Shooting { get; set; }
+        
         private Tweener _lookAtTween;
         private Vector3 _movementInput;
         private float _rollAxis;
@@ -40,12 +47,13 @@ namespace Entities.Player {
 
         private void Start() {
             spearGun.Initialize(this);
-        }
-
-        private void OnEnable() {
+            
+            Movement = new PlayerMovement(this);
+            Shooting = new PlayerShooting(this);
+            
             EnableInput();
         }
-
+        
         private void OnDisable() {
             DisableInput();
         }
@@ -57,7 +65,7 @@ namespace Entities.Player {
         public void LookAt(Vector3 target, float duration, Ease ease, TweenCallback callback) {
             _lookAtTween ??= transform.DOLookAt(target, duration).SetEase(ease).OnComplete(() => {
                 callback?.Invoke();
-                playerShooting.RefreshMouseToRotation();
+                // Shooting.RefreshMouseToRotation(); // TODO: This should not go here right?!?!?!??!?!
                 _lookAtTween = null;
             }); 
         }
@@ -85,11 +93,11 @@ namespace Entities.Player {
         #region Private Functions
     
         private void EnableInput() {
-
-            playerInput.actions["Move"].performed += playerMovement.Move;
-            playerInput.actions["Move"].canceled += playerMovement.Move;
             
-            playerInput.actions["Look"].performed += playerShooting.Look;
+            playerInput.actions["Move"].performed += Movement.Move;
+            playerInput.actions["Move"].canceled += Movement.Move;
+            
+            playerInput.actions["Look"].performed += Shooting.Look;
             
             // TODO: Abstract this to a IWeapon.
             playerInput.actions["Aim"].started += spearGun.AimOn;
@@ -99,10 +107,10 @@ namespace Entities.Player {
         }
 
         private void DisableInput() {
-            playerInput.actions["Move"].performed += playerMovement.Move;
-            playerInput.actions["Move"].canceled += playerMovement.Move;
+            playerInput.actions["Move"].performed += Movement.Move;
+            playerInput.actions["Move"].canceled += Movement.Move;
             
-            playerInput.actions["Look"].performed -= playerShooting.Look;
+            playerInput.actions["Look"].performed -= Shooting.Look;
 
             // TODO: Abstract this to a IWeapon.
             playerInput.actions["Aim"].started -= spearGun.AimOn;

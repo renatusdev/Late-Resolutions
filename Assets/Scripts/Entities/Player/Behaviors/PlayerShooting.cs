@@ -3,16 +3,17 @@ using UnityEngine.InputSystem;
 
 namespace Entities.Player.Behaviors {
     /// <summary> Handles player aiming, weapons, and shooting. </summary>
-    public class PlayerShooting : MonoBehaviour
+    public class PlayerShooting
     {
         private const float MouseSensitivity = 0.25f;
         private const bool MouseInvertedY = false;
     
         private Vector2 _mouseRotation;
-
-        internal void Initialize() {
+        private readonly Player _player;
+        
+        public PlayerShooting(Player player) {
+            _player = player;
             RefreshMouseToRotation();
-    
         }
         
         internal void Look(InputAction.CallbackContext context) {
@@ -27,11 +28,11 @@ namespace Entities.Player.Behaviors {
             _mouseRotation.x %= 360;
             _mouseRotation.y = Mathf.Clamp(_mouseRotation.y, -90, 90);
         
-            transform.rotation = Quaternion.Euler(_mouseRotation.y, _mouseRotation.x, 0);
+            _player.transform.rotation = Quaternion.Euler(_mouseRotation.y, _mouseRotation.x, 0);
         }
         
         internal void RefreshMouseToRotation() {
-            var rotation = transform.rotation.eulerAngles;
+            var rotation = _player.transform.rotation.eulerAngles;
         
             _mouseRotation.x = rotation.y;
             _mouseRotation.y = (rotation.x >= 270) ? rotation.x - 360 : rotation.x;
