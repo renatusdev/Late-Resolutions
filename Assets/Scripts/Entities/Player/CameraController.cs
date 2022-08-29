@@ -1,21 +1,32 @@
-using UnityEngine;
 using Cinemachine;
 using DG.Tweening;
+using UnityEngine;
 
-[RequireComponent(typeof(CinemachineVirtualCamera))]
-public class CameraController : MonoBehaviour {
+namespace Entities.Player {
+	[RequireComponent(typeof(CinemachineVirtualCamera))]
+	public class CameraController : MonoBehaviour {
 
-	private CinemachineVirtualCamera _cinemachineVirtualCamera;
-	private Tweener _fovTween;
+		private CinemachineVirtualCamera _cinemachineVirtualCamera;
+		private Tweener _fovTween;
+		private Tweener _dutchTween;
 	
-	private void Awake() {
-		_cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-		_fovTween = DOTween.To(() => _cinemachineVirtualCamera.m_Lens.FieldOfView,
-			x => _cinemachineVirtualCamera.m_Lens.FieldOfView = x, 0, 0).Pause().SetAutoKill(false);
-	}
+		private void Awake() {
+			_cinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
+			_fovTween = DOTween.To(() => _cinemachineVirtualCamera.m_Lens.FieldOfView,
+				x => _cinemachineVirtualCamera.m_Lens.FieldOfView = x, 0, 0).Pause().SetAutoKill(false);
+			
+			_dutchTween = DOTween.To(() => _cinemachineVirtualCamera.m_Lens.Dutch,
+				x => _cinemachineVirtualCamera.m_Lens.Dutch = x, 0, 0).Pause().SetAutoKill(false);
+		}
 	
-	public void SetFOV(float value, float duration) {
-		_fovTween.ChangeValues(_cinemachineVirtualCamera.m_Lens.FieldOfView, value, duration);
-		_fovTween.Restart();
+		public void SetFOV(float value, float duration) {
+			_fovTween.ChangeValues(_cinemachineVirtualCamera.m_Lens.FieldOfView, value, duration);
+			_fovTween.Restart();
+		}
+
+		public void SetDutch(float value, float duration) {
+			_dutchTween.ChangeValues(_cinemachineVirtualCamera.m_Lens.Dutch, value, duration);
+			_dutchTween.Restart();
+		}
 	}
 }

@@ -6,26 +6,38 @@ namespace Entities.Player.Behaviors {
     public class PlayerMovement
     {
         private const float SpeedMultiplier = 10;
+        private const float KickUpMultiplier = 8;
+        
+        private const float DutchDuration = 0.2f;
+        private const int DutchMultiplier = 2;
         private readonly Player _player;
-        private Vector3 _inputMovement;
+        private Vector3 _xzInput;
+        private float _yInput;
         
         public PlayerMovement(Player player) {
             _player = player;
         }
-        
-        internal void GetInput(InputAction.CallbackContext context) {
+
+        internal void GetMoveInput(InputAction.CallbackContext context) {
             var input = context.ReadValue<Vector2>();
             
             _player.Animator.SetBool("isForward", input.y >= 0.7f);
-            _inputMovement = new Vector3(input.x, 0, input.y);
+            _xzInput = new Vector3(input.x, 0, input.y);
         }
 
+        public void GetKickUpInput(InputAction.CallbackContext obj) {
+            _yInput = obj.ReadValue<float>();
+        }
+        
         internal void Move() {
-            var velocity = _player.transform.TransformDirection(_inputMovement);
-            velocity *= _player.Speed * SpeedMultiplier;
+            
+            var velocity = _player.transform.TransformDirection(_xzInput);
+            velocity *= _player.MoveSpeed * SpeedMultiplier;
+            velocity.y += _yInput * _player.KickUpSpeed * KickUpMultiplier;
             velocity *= Time.deltaTime;
         
             _player.CharacterController.Move(velocity);
+            _player.CameraController.SetDutch(-_xzInput.x * DutchMultiplier, DutchDuration);
         }
 
         #region Public Functions
@@ -41,5 +53,7 @@ namespace Entities.Player.Behaviors {
         }
 
         #endregion
+
+
     }
 }

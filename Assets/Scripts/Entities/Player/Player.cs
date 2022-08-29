@@ -11,8 +11,9 @@ namespace Entities.Player {
         #region Fields
         
         [Header("Properties")]
-        [Range(0, 1)]
-        [SerializeField] private float speed;
+        
+        [Range(0, 1)] [SerializeField] private float moveSpeed;
+        [Range(0, 1)] [SerializeField] private float kickUpSpeed;
         
         [Header("General References")]
         [SerializeField] private Animator animator;
@@ -29,7 +30,8 @@ namespace Entities.Player {
         public Animator Animator => animator;
         public PlayerInput Input => playerInput;
         
-        public float Speed => speed;
+        public float MoveSpeed => moveSpeed;
+        public float KickUpSpeed => kickUpSpeed;
         
         // Behaviors
         public PlayerMovement Movement { get; set; }
@@ -62,9 +64,10 @@ namespace Entities.Player {
         #region Private Functions
     
         private void EnableInput() {
-            
-            Input.actions["Move"].performed += Movement.GetInput;
-            Input.actions["Move"].canceled += Movement.GetInput;
+            Input.actions["Move"].performed += Movement.GetMoveInput;
+            Input.actions["Move"].canceled += Movement.GetMoveInput;
+            Input.actions["Kick Up"].performed += Movement.GetKickUpInput;
+            Input.actions["Kick Up"].canceled += Movement.GetKickUpInput;
             
             Input.actions["Look"].performed += Aim.GetInput;
             
@@ -76,8 +79,10 @@ namespace Entities.Player {
         }
 
         private void DisableInput() {
-            Input.actions["Move"].performed += Movement.GetInput;
-            Input.actions["Move"].canceled += Movement.GetInput;
+            Input.actions["Move"].performed -= Movement.GetMoveInput;
+            Input.actions["Move"].canceled -= Movement.GetMoveInput;
+            Input.actions["Kick Up"].performed -= Movement.GetKickUpInput;
+            Input.actions["Kick Up"].canceled -= Movement.GetKickUpInput;
             
             Input.actions["Look"].performed -= Aim.GetInput;
 
@@ -87,7 +92,7 @@ namespace Entities.Player {
             Input.actions["Shoot"].performed += spearGun.Shoot;
             Input.actions["Reload"].performed -= spearGun.Reload;
         }
-
+        
         #endregion
     }
 }
