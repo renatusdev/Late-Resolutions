@@ -13,6 +13,7 @@ namespace Entities.Player.Behaviors {
         private readonly Player _player;
         private Vector3 _xzInput;
         private float _yInput;
+        private Vector3 _externalVelocity;
         
         public PlayerMovement(Player player) {
             _player = player;
@@ -35,9 +36,14 @@ namespace Entities.Player.Behaviors {
             velocity *= _player.MoveSpeed * SpeedMultiplier;
             velocity.y += _yInput * _player.KickUpSpeed * KickUpMultiplier;
             velocity *= Time.deltaTime;
+            
+            // Factor in any external velocity
+            velocity += _externalVelocity * Time.deltaTime;
         
             _player.CharacterController.Move(velocity);
             _player.CameraController.SetDutch(-_xzInput.x * DutchMultiplier, DutchDuration);
+
+            _externalVelocity = Vector3.zero;
         }
 
         #region Public Functions
@@ -46,14 +52,12 @@ namespace Entities.Player.Behaviors {
         public Vector3 GetPredictedPosition(float timeAhead) {
             return timeAhead * _player.CharacterController.velocity + _player.transform.position;
         }
-        
-        /// <summary> Add a direction and force to factor in for this frame of the velocity. </summary>
-        public void AddVelocity(Vector3 direction, float force) {
-            throw new System.NotImplementedException();
+
+        /// <summary> Add a magnitude and direction to factor in for this frame of the velocity. </summary>
+        public void AddExternalVelocity(Vector3 velocity) {
+            _externalVelocity = velocity;
         }
-
+        
         #endregion
-
-
     }
 }
