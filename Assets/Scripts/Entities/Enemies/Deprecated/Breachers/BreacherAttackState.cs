@@ -61,7 +61,7 @@ namespace Entities.Enemies.Breachers {
 			// _breacher.GameManager.SlowTime(1); TODO: Reimplement with task.
 			_breacher.ImpulseSource.GenerateImpulse();
 			_breacher.BreachFX.Play();
-			_breacher.GameManager.FocusOn(_breacher.transform.position, FocusOnDuration, Ease.OutBack);
+			// _breacher.GameManager.Player.Aim.FocusOn(_breacher.transform.position, FocusOnDuration, Ease.OutBack);
 		}
 	}
 }

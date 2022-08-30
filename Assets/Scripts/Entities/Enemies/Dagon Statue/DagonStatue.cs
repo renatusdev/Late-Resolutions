@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using Managers;
 using Plugins.Renatus.Util;
 using Plugins.Renatus.Util.Events;
@@ -11,18 +12,20 @@ namespace Entities.Enemies.Dagon_Statue {
 
         #region Fields & Properties
 
-        // [Header("Properties")]
-        // [Tooltip("The amount of projectiles to shoot per second.")]
-        // [SerializeField] [Range(0.1f, 1)] private float projectileFrequency = 0.5f;
-
+        [Header("Customizables")]
+        [SerializeField] private AnimationCurve pullStrength;
+        
         [Header("FXs")]
         [SerializeField] private FXSystem onAttackFX;
         
         [Header("Tools")]
         [SerializeField] private OnTriggerEventHelper triggerEventHelper;
         [SerializeField] private Collider statueCollider;
-        
+        [SerializeField] private CinemachineImpulseSource cameraShake;
+
         public OnTriggerEventHelper OnTriggerEventHelper => triggerEventHelper;
+        public AnimationCurve PullStrength => pullStrength;
+        public CinemachineImpulseSource CameraShake => cameraShake;
         public Collider StatueCollider => statueCollider;
         public FXSystem OnAttackFX => onAttackFX;
 
@@ -38,7 +41,7 @@ namespace Entities.Enemies.Dagon_Statue {
         #region Unity Functions
 
         private void Update() {
-            CurrentState.Execute();
+            CurrentState?.Execute();
         }
 
         #endregion

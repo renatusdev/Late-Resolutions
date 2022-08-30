@@ -7,6 +7,11 @@ namespace Plugins.Renatus.Util.Events {
 	public class OnTriggerEventHelper : MonoBehaviour {
 		
 		private Action<Collider> _onTriggerEnterAction;
+		public Collider Collider { get; private set; }
+
+		private void Start() {
+			Collider = GetComponent<Collider>();
+		}
 
 		public void Initialize(Action<Collider> onTriggerEnter) {
 			_onTriggerEnterAction = onTriggerEnter;

@@ -22,8 +22,8 @@ namespace Entities.Player.Behaviors {
         internal void GetMoveInput(InputAction.CallbackContext context) {
             var input = context.ReadValue<Vector2>();
             
-            _player.Animator.SetBool("isForward", input.y >= 0.7f);
             _xzInput = new Vector3(input.x, 0, input.y);
+            _player.Animator.SetBool("isForward", input.y >= 0.7f);
         }
 
         public void GetKickUpInput(InputAction.CallbackContext obj) {
@@ -31,14 +31,14 @@ namespace Entities.Player.Behaviors {
         }
         
         internal void Move() {
+
+            var velocity = _xzInput;
             
-            var velocity = _player.transform.TransformDirection(_xzInput);
-            velocity *= _player.MoveSpeed * SpeedMultiplier;
-            velocity.y += _yInput * _player.KickUpSpeed * KickUpMultiplier;
-            velocity *= Time.deltaTime;
-            
-            // Factor in any external velocity
-            velocity += _externalVelocity * Time.deltaTime;
+            velocity = _player.transform.TransformDirection(velocity);          // Convert input to world space direction.
+            velocity *= _player.MoveSpeed * SpeedMultiplier;                    // Add speed.
+            velocity.y += _yInput * _player.KickUpSpeed * KickUpMultiplier;     // Add kicking up to float speed.
+            velocity *= Time.deltaTime;                                         // Convert to frame-based velocity.
+            velocity += _externalVelocity * Time.deltaTime;                     // Factor in any external velocity.
         
             _player.CharacterController.Move(velocity);
             _player.CameraController.SetDutch(-_xzInput.x * DutchMultiplier, DutchDuration);

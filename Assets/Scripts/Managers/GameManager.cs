@@ -16,8 +16,7 @@ namespace Managers {
 
 		[SerializeField] private Player player;
 		[SerializeField] private CameraController cameraController;
-
-
+		
 		/// TODO: Eventually, we will revisit this to contemplate a better approach for collecting/spawning entities.
 		/// Because ideally, the entities should not even be spawned.
 		[Header("Enemy Entities")]
@@ -42,16 +41,6 @@ namespace Managers {
 		#endregion
 
 		#region Public Functions
-
-		public void FocusOn(Vector3 target, float duration, Ease ease, TweenCallback callback = null) {
-			if (HasFocusOn) return;
-			
-			HasFocusOn = true;
-			player.Aim.FocusOn(target, duration, ease, () => {
-				HasFocusOn = false;
-				callback?.Invoke();
-			});
-		}
 
 		#endregion
 
