@@ -19,6 +19,10 @@ namespace Entities.Enemies.Dagon_Statue {
 
         public void Exit() {
         }
+        
+        public void OnHit() {
+            
+        }
 
     }
 }

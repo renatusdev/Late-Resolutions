@@ -5368,16 +5368,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c32060ea98c294ba5ec16c86806825, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HasParticleSystem: 1
-  m_HasAudio: 1
-  m_HasMultipleClips: 0
-  m_HasVariablePitch: 1
-  m_AudioSource: {fileID: 3219175909111478229}
-  m_ParticleSystem: {fileID: 9133325668087665131}
-  m_AudioClips:
-  - {fileID: 8300000, guid: 220521a63c2ec044aab72c959fed9ebc, type: 3}
-  m_MinVariablePitch: 0.9
-  m_MaxVariablePitch: 1.2
+  particleSystem: {fileID: 9133325668087665131}
+  audioSource: {fileID: 3219175909111478229}
+  clips: []
+  hasVariablePitch: 1
+  minimumPitch: 1.2
+  maximumPitch: 0.6
 --- !u!4 &2479481196078937488 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4424594314804926392, guid: d4f197bba04877943a45e81d26a873db, type: 3}
@@ -5395,6 +5391,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5354466538958599258}
     m_Modifications:
+    - target: {fileID: 3488344888017097047, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 8122380774200458522}
+    - target: {fileID: 3488344888017097047, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
+      propertyPath: particleSystem
+      value: 
+      objectReference: {fileID: 4427143158744739399}
     - target: {fileID: 8301496775549892501, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -5468,5 +5472,15 @@ PrefabInstance:
 --- !u!4 &4427143158744739396 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8301496777089213151, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
+  m_PrefabInstance: {fileID: 5639782625791184027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &4427143158744739399 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8301496777089213148, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
+  m_PrefabInstance: {fileID: 5639782625791184027}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &8122380774200458522 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 4538773199698669953, guid: b9ff00ca1c5f8774a9f3cbcb567fcbdf, type: 3}
   m_PrefabInstance: {fileID: 5639782625791184027}
   m_PrefabAsset: {fileID: 0}

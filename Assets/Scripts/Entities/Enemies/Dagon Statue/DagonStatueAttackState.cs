@@ -1,26 +1,23 @@
-﻿using System.Linq;
-using DG.Tweening;
+﻿using System.Threading.Tasks;
 using Managers;
-using Plugins.Renatus.Util.State_Machine;
-using UnityEditor.AssetImporters;
 using UnityEngine;
-using UnityEngine.Experimental.Rendering;
-using UnityEngine.InputSystem.DualShock;
 
 namespace Entities.Enemies.Dagon_Statue {
     public class DagonStatueAttackState : IDagonState {
         
         #region Fields, Properties, & Constructors 
         
-        private const int PullStrength = 8;
-
         private float _maxPullDistance;
+        private float _maxPullStrength;
+        private float _currentPullStrength;
         private float _currentDistance;
 
         public DagonStatue DagonStatue { get; set; }
 
         public DagonStatueAttackState(DagonStatue dagonStatue) {
             DagonStatue = dagonStatue;
+            _maxPullStrength = DagonStatue.MaxPullStrength;
+            _currentPullStrength = _maxPullDistance;
         }
         
         #endregion
@@ -32,16 +29,36 @@ namespace Entities.Enemies.Dagon_Statue {
         }
 
         public void Enter() {
-            // TODO: Awakened Vortex fx (vfx/sfx)
             
             var player = DagonStatue.GameManager.Player;
             var direction = DagonStatue.transform.position - player.transform.position;
             _maxPullDistance = direction.magnitude;
-
-            DagonStatue.CameraShake.GenerateImpulseWithVelocity(direction.normalized);
+            _currentPullStrength = _maxPullStrength;
+            
+            DagonStatue.OnAttackFX.Play().AddCameraShake(direction.normalized);
         }
 
         public void Exit() {
+        }
+        
+        public async void OnHit() {
+            await Enrage();
+        }
+
+        private async Task Enrage() {
+            // FX: Scream, vortex radius shrinks.
+            var fx = DagonStatue.OnEnragedFX.Play();
+            // Diminish the strength of the pull.
+            _currentPullStrength = _maxPullStrength * 0.5f;
+            await Task.Delay(1000);
+            // FX: Camera shake.
+            fx.AddCameraShake((DagonStatue.transform.position - DagonStatue.GameManager.Player.transform.position).normalized);
+            await Task.Delay(2000);
+            
+            // Return pull strength to normal.
+            _currentPullStrength = _maxPullStrength;
+
+            // FX??: Enraged, vortex radius and color change. 
         }
 
         #endregion
@@ -52,11 +69,11 @@ namespace Entities.Enemies.Dagon_Statue {
             var player = DagonStatue.GameManager.Player;
             var direction = DagonStatue.transform.position - player.transform.position;
             _currentDistance = (_maxPullDistance - Mathf.Clamp(direction.magnitude, 0, _maxPullDistance))/_maxPullDistance;
-            var magnitude = DagonStatue.PullStrength.Evaluate(_currentDistance) * PullStrength;
+            var magnitude = DagonStatue.PullStrength.Evaluate(_currentDistance) * _currentPullStrength;
 
             player.Movement.AddExternalVelocity(direction.normalized * magnitude);
         }
-        
+
         #endregion
  }
 }

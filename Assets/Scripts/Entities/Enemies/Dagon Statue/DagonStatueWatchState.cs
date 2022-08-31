@@ -28,5 +28,9 @@ namespace Entities.Enemies.Dagon_Statue {
 
         public void Exit() {
         }
+        
+        public void OnHit() {
+            // TODO: Change to attack state and in enraged!
+        }
     }
 }
