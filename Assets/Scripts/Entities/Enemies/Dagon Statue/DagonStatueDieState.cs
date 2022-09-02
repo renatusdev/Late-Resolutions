@@ -15,6 +15,9 @@ namespace Entities.Enemies.Dagon_Statue {
 
         public void Enter() {
             Debug.Log("Dead boi.");
+            
+            // Vortex radius to zero!
+            // TODO: Ghost 5_3 audio on death
         }
 
         public void Exit() {

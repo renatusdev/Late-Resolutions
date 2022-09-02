@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using DG.Tweening;
 using Managers;
 using UnityEngine;
 
@@ -26,6 +27,10 @@ namespace Entities.Enemies.Dagon_Statue {
 
         public void Execute() {
             Pull();
+            DagonStatue.Vortex.SetDistanceToPlayer(_currentDistance);
+            DagonStatue.transform.LookAt(DagonStatue.GameManager.Player.transform);
+            
+            Debug.Log(_currentPullStrength);
         }
 
         public void Enter() {
@@ -35,30 +40,26 @@ namespace Entities.Enemies.Dagon_Statue {
             _maxPullDistance = direction.magnitude;
             _currentPullStrength = _maxPullStrength;
             
-            DagonStatue.OnAttackFX.Play().AddCameraShake(direction.normalized);
+            DagonStatue.Vortex.Play(direction.normalized);
+            DagonStatue.GameManager.Player.Aim.FocusOn(DagonStatue.transform.position, 0.75f, Ease.OutBack);
         }
 
         public void Exit() {
         }
         
-        public async void OnHit() {
-            await Enrage();
+        public void OnHit() {
+            Enrage();
         }
 
-        private async Task Enrage() {
-            // FX: Scream, vortex radius shrinks.
-            var fx = DagonStatue.OnEnragedFX.Play();
-            // Diminish the strength of the pull.
-            _currentPullStrength = _maxPullStrength * 0.5f;
-            await Task.Delay(1000);
-            // FX: Camera shake.
-            fx.AddCameraShake((DagonStatue.transform.position - DagonStatue.GameManager.Player.transform.position).normalized);
-            await Task.Delay(2000);
-            
-            // Return pull strength to normal.
-            _currentPullStrength = _maxPullStrength;
+        private async void Enrage() {
 
-            // FX??: Enraged, vortex radius and color change. 
+            DagonStatue.Vortex.Hurt();
+            _currentPullStrength = _maxPullStrength * 0.5f;
+
+            await Task.Delay(2000);
+
+            DagonStatue.Vortex.Enrage();
+            _currentPullStrength = _maxPullStrength;
         }
 
         #endregion

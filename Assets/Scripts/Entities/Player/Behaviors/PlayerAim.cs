@@ -47,7 +47,7 @@ namespace Entities.Player.Behaviors {
             _player.CameraController.SetFOV(90, 0.2f);
         }
 
-        public void FocusOn(Vector3 target, float duration, Ease ease, Action callback) {
+        public void FocusOn(Vector3 target, float duration, Ease ease, Action callback = null) {
             _lookAtTween ??= _player.transform.DOLookAt(target, duration).SetEase(ease).OnComplete(() => {
                 callback?.Invoke();
                 RefreshMouseToRotation();

@@ -19,8 +19,10 @@ namespace Plugins.Renatus.Util.FXS {
         
         public FXSystem Play() {
 
-            if (particleSystem != null)
+            if (particleSystem != null) {
+                particleSystem.gameObject.SetActive(true);
                 particleSystem.Play();
+            }
 
             if (audioSource == null) return this;
             

@@ -15,9 +15,7 @@ public class ShaderHelper : MonoBehaviour {
         [SerializeField] private float m_Duration;
         [SerializeField] private float m_To;
         [SerializeField] private bool m_HasInheretedFrom;
-        [SerializeField]
-        [HideInInspector]
-        private float m_From;
+        [SerializeField] [HideInInspector] private float m_From;
 
         protected float m_Timer;
         private float m_OriginalFrom;
@@ -86,8 +84,7 @@ public class ShaderHelper : MonoBehaviour {
             property.Update(m_Material);
         }
     }
-
-
+    
     public void Play() {
         foreach (PropertyHelper property in m_Properties) {
             property.Initialize(m_Material);
@@ -102,26 +99,5 @@ public class ShaderHelper : MonoBehaviour {
         foreach (PropertyHelper property in m_Properties) {
             property.Reset(m_Material);
         }
-    }
-}
-
-[CustomEditor(typeof(ShaderHelper))]
-public class ShaderHelperEditor : Editor {
-    public override void OnInspectorGUI() {
-        DrawDefaultInspector();
-        serializedObject.Update();
-
-        ShaderHelper shaderHelper = target as ShaderHelper;
-
-        if (shaderHelper == null) return;
-        if (shaderHelper.Properties == null) return;
-
-        foreach (var property in shaderHelper.Properties) {
-            if (!property.HasInheretedFrom) {
-                property.From = EditorGUILayout.FloatField("From", property.From);
-            }
-        }
-
-        EditorUtility.SetDirty(shaderHelper);
     }
 }

@@ -1,4 +1,5 @@
 using Cinemachine;
+using Hazards;
 using Managers;
 using Plugins.Renatus.Util;
 using Plugins.Renatus.Util.Events;
@@ -16,8 +17,7 @@ namespace Entities.Enemies.Dagon_Statue {
         [SerializeField] private AnimationCurve pullStrengthToDistance;
         
         [Header("FXs")]
-        [SerializeField] private FXSystem onAttackFX;
-        [SerializeField] private FXSystem onEnragedFX;
+        [SerializeField] private Vortex vortex;
         
         [Header("Tools")]
         [SerializeField] private OnTriggerEventHelper triggerEventHelper;
@@ -26,8 +26,7 @@ namespace Entities.Enemies.Dagon_Statue {
         public OnTriggerEventHelper OnTriggerEventHelper => triggerEventHelper;
         public AnimationCurve PullStrength => pullStrengthToDistance;
         public Collider StatueCollider => statueCollider;
-        public FXSystem OnAttackFX => onAttackFX;
-        public FXSystem OnEnragedFX => onEnragedFX;
+        public Vortex Vortex => vortex;
         public float MaxPullStrength => maxPullStrength;
 
         public DagonStatueWatchState WatchState     { get; private set; }
