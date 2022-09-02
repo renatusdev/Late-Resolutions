@@ -16,7 +16,7 @@ Shader "Unlit/Vortex"
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue" = "Transparent" }
-        Blend [_SourceFactor] [_DestinationFactor]
+        Blend [_SourceFactor]       [_DestinationFactor]
         Cull Front
 
         Pass
@@ -32,6 +32,7 @@ Shader "Unlit/Vortex"
             {
                 float4 vertex : POSITION;
                 float2 uv : TEXCOORD0;
+                float3 normal : NORMAL;
             };
 
             struct Interpolator
@@ -55,7 +56,6 @@ Shader "Unlit/Vortex"
                 
                 v.vertex.x += sin(v.vertex.z - _Time.y * _TornadoSpeed * 15) * v.uv.y;
                 v.vertex.y -= cos(v.vertex.z - _Time.y * _TornadoSpeed * 15) * v.uv.y;
-
                 
                 i.vertex = UnityObjectToClipPos(v.vertex);
                 i.uv = v.uv;
@@ -76,7 +76,7 @@ Shader "Unlit/Vortex"
 
                 float4 finalColor = saturate(colorA + colorB); 
                 UNITY_APPLY_FOG(i.fogCoord, finalColor);
-                
+
                 return finalColor;
             }
             ENDCG
