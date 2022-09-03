@@ -33,12 +33,13 @@
 ExportedObj/
 .consulo/
 *.csproj
-*.unityproj
-*.sln
+#*.unityproj
+#*.sln
 *.suo
 *.tmp
 *.user
-*.userprefs
+
+#*.userprefs
 *.pidb
 *.booproj
 *.svd
