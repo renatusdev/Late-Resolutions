@@ -6,7 +6,7 @@ namespace Entities.Player.Behaviors {
     
         private const float RunMultiplier = 10;
         private const float SprintMultiplier = 3;
-        private const float JumpForce = 3;
+        private const float JumpForce = 2.6f;
         private const float Gravity = -9.82f;
         private const float MaxJumpTime = 0.4f;
         
@@ -32,13 +32,14 @@ namespace Entities.Player.Behaviors {
                 // Gravity Logic
                 velocity.y += Gravity * Mathf.Clamp01(_fallingTimer);
                 _fallingTimer += Time.deltaTime;
+                
             } else {
                 _fallingTimer = 0;
                 
                 // Jump Logic
                 if (PlayerMovement.YInput > 0) {
                     _isJumping = true;
-                    velocity.y += JumpForce;
+                    velocity.y += JumpForce * 1-Mathf.Clamp01(_jumpTimer);
 
                     if (_jumpTimer > MaxJumpTime) {
                         _isJumping = false;
