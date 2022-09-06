@@ -3,12 +3,13 @@ using Entities.Player;
 using Plugins.Renatus.Util;
 using Plugins.Renatus.Util.FXS;
 using Plugins.Renatus.Util.State_Machine;
+using UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 // TODO(Sergio): .Shoot(): Only shoot in shootable areas (or pointing farrr away), else, relay "x" icon in non-shootable. (Based off of raycast).
 namespace Spear_Gun {
-    public class SpearGun : StateManager  {
+    public class SpearGun : MonoBehaviour, IStateManager  {
 
         #region Fields
 
@@ -26,6 +27,9 @@ namespace Spear_Gun {
         // private BaseState m_CurrentState;
     
         public Spear Spear { get; set; }
+        
+        public IBaseState CurrentState { get; set; }
+        public IBaseState PreviousState { get; set; }
     
         public SpearGunReadyState ReadyState { get; private set; }
         public SpearGunReloadingState ReloadingState { get; private set; }
@@ -69,6 +73,19 @@ namespace Spear_Gun {
 
             Spear = m_SpearPool.Dequeue().GetComponent<Spear>();
             Spear.Initialize(m_SpearPool);
+        }
+        
+        public void ChangeState(IBaseState newState) {
+            CurrentState?.Exit();
+
+            PreviousState = CurrentState;
+            CurrentState = newState;
+			
+            CurrentState.Enter(); 
+        }
+
+        public bool IsCurrentState(IBaseState state) {
+            return CurrentState.Equals(state);
         }
 
         public bool HasSpear() {

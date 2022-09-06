@@ -42,6 +42,7 @@ namespace Entities.Enemies.Dagon_Statue {
             
             DagonStatue.Vortex.Play(direction.normalized);
             DagonStatue.GameManager.Player.Aim.FocusOn(DagonStatue.transform.position, 0.75f, Ease.OutBack);
+            DagonStatue.GameManager.Overlay.PlayFlash(DagonStatue.Vortex.NormalColor, 0.4f, Ease.Flash, Ease.Flash);
         }
 
         public void Exit() {

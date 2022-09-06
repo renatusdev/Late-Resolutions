@@ -66,17 +66,6 @@ public class Spear : MonoBehaviour {
         }
     }
 
-    private void OnDestroy() {
-        
-    }
-
-    private void OnDrawGizmos() {
-        if (!Application.isPlaying || !m_Debug) return;
-        
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(m_HitPoint, 0.1f);
-    }
-
     private void OnCollisionEnter(Collision collision) {
         
         if(!m_IsThrusting)
@@ -92,7 +81,7 @@ public class Spear : MonoBehaviour {
             m_ImpactDefaultFX.Play();
         }
         else {
-            shootable.OnHit(this, hitPoint);
+            shootable.OnHit(this, collision.GetContact(0));
         }
 
         // When we collide with an object that does not have a 1:1:1 local scale

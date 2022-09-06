@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IShootable {
 
-	void OnHit(Spear spear, Vector3 hitPoint);
+	void OnHit(Spear spear, ContactPoint hitPoint);
 }

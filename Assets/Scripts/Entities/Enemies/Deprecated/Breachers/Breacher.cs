@@ -13,7 +13,7 @@ using Vector3 = UnityEngine.Vector3;
 // TODO(Sergio): Investigate Multi-Referential Constraint for spatial awareness.
 // https://docs.unity3d.com/Packages/com.unity.animation.rigging@1.1/manual/constraints/MultiReferentialConstraint.html
 namespace Entities.Enemies.Breachers {
-	public class Breacher : StateManager, IShootable {
+	public class Breacher : MonoBehaviour, IStateManager, IShootable {
 
 		#region Fields & Properties
 
@@ -71,8 +71,8 @@ namespace Entities.Enemies.Breachers {
 			Timer += Time.deltaTime;
 		}
 
-		public void OnHit(Spear spear, Vector3 hitPoint) {
-			onHitFX.transform.position = hitPoint;
+		public void OnHit(Spear spear, ContactPoint hitPoint) {
+			onHitFX.transform.position = hitPoint.point;
 			onHitFX.Play();
 			
 			if (!DieState.IsDying) {
@@ -109,6 +109,21 @@ namespace Entities.Enemies.Breachers {
 
 		
 		#endregion
+
+		public IBaseState CurrentState { get; set; }
+		public IBaseState PreviousState { get; set; }
+		public void ChangeState(IBaseState newState) {
+			CurrentState?.Exit();
+
+			PreviousState = CurrentState;
+			CurrentState = newState;
+			
+			CurrentState.Enter(); 
+		}
+
+		public bool IsCurrentState(IBaseState state) {
+			return CurrentState.Equals(state);
+		}
 	}
 }
 

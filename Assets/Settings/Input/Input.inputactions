@@ -51,9 +51,18 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Kick Up",
+                    "name": "Jump",
                     "type": "Value",
                     "id": "b216939c-18d9-4b2e-ab3c-1533c47880fc",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Sprint",
+                    "type": "Value",
+                    "id": "ffdf498a-2f34-46ad-a4c5-4a5847f031cd",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -167,7 +176,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Kick Up",
+                    "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e5a77e9-fd2f-4ad9-aca3-40bb8e34ee31",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

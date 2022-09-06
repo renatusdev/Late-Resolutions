@@ -1,3 +1,4 @@
+using System;
 using Cinemachine;
 using Hazards;
 using Managers;
@@ -8,7 +9,7 @@ using Plugins.Renatus.Util.State_Machine;
 using UnityEngine;
 
 namespace Entities.Enemies.Dagon_Statue {
-    public class DagonStatue : StateManager, IShootable {
+    public class DagonStatue : MonoBehaviour, IStateManager, IShootable {
 
         #region Fields & Properties
 
@@ -18,6 +19,7 @@ namespace Entities.Enemies.Dagon_Statue {
         
         [Header("FXs")]
         [SerializeField] private Vortex vortex;
+        [SerializeField] private FXSystem onHitFX;
         
         [Header("Tools")]
         [SerializeField] private OnTriggerEventHelper triggerEventHelper;
@@ -28,6 +30,9 @@ namespace Entities.Enemies.Dagon_Statue {
         public Collider StatueCollider => statueCollider;
         public Vortex Vortex => vortex;
         public float MaxPullStrength => maxPullStrength;
+
+        public IBaseState CurrentState { get; set; }
+        public IBaseState PreviousState { get; set; }
 
         public DagonStatueWatchState WatchState     { get; private set; }
         public DagonStatueAttackState AttackState   { get; private set; }
@@ -62,16 +67,37 @@ namespace Entities.Enemies.Dagon_Statue {
             
             ChangeState(WatchState);
             _health = 2;
-        }   
+        }
+        
+        public void ChangeState(IBaseState newState) {
+            CurrentState?.Exit();
+
+            PreviousState = CurrentState;
+            CurrentState = newState;
+			
+            CurrentState.Enter();         }
+
+        public bool IsCurrentState(IBaseState state) {
+            return CurrentState.Equals(state);
+        }
         
         #endregion
 
         #region Event Functions
         
-        public void OnHit(Spear spear, Vector3 hitPoint) {
-            if (_health <= 0) return;
-            _health--;
+        public void OnHit(Spear spear, ContactPoint hitPoint) {
+
+            var onHit = onHitFX.transform;
+
+            // Fake onHit forward normal with spear position and hit point position.
+            onHit.forward = (spear.transform.position - hitPoint.point).normalized;
+            onHit.position = hitPoint.point;
+            onHitFX.Play();
             
+            if (_health <= 0) return;
+
+            _health--;
+
             if (_health <= 0) {
                 ChangeState(DieState);
                 return;
@@ -79,6 +105,7 @@ namespace Entities.Enemies.Dagon_Statue {
             
             (CurrentState as IDagonState)?.OnHit();
         }
+        
         
         #endregion
     }

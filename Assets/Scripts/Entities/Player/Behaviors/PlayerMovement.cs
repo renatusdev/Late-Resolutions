@@ -1,47 +1,60 @@
+using System.Data;
+using Plugins.Renatus.Util.State_Machine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR.Haptics;
 
 namespace Entities.Player.Behaviors {
 
-    public class PlayerMovement
+    public class PlayerMovement : IStateManager
     {
-        private const float SpeedMultiplier = 10;
-        private const float KickUpMultiplier = 8;
+        public IBaseState CurrentState { get; set; }
+        public IBaseState PreviousState { get; set; }
         
         private const float DutchDuration = 0.2f;
         private const int DutchMultiplier = 2;
-        private readonly Player _player;
-        private Vector3 _xzInput;
-        private float _yInput;
         private Vector3 _externalVelocity;
+
+        public PlayerSwimMovement PlayerSwimMovement { get; set; }
+        public PlayerRunMovement PlayerRunMovement { get; set; }
+        
+        public Player Player { get; private set; }
+        public Vector3 XZInput { get; private set; }
+        public float YInput { get; private set; }
+        public float SprintInput { get; private set; }
         
         public PlayerMovement(Player player) {
-            _player = player;
-        }
+            Player = player;
 
-        internal void GetMoveInput(InputAction.CallbackContext context) {
-            var input = context.ReadValue<Vector2>();
+            PlayerSwimMovement = new PlayerSwimMovement(this, Player);
+            PlayerRunMovement = new PlayerRunMovement(this, Player);
             
-            _xzInput = new Vector3(input.x, 0, input.y);
-            _player.Animator.SetBool("isForward", input.y >= 0.7f);
+            ChangeState(PlayerRunMovement);
         }
 
-        public void GetKickUpInput(InputAction.CallbackContext obj) {
-            _yInput = obj.ReadValue<float>();
+        internal void GetMoveInput(InputAction.CallbackContext move) {
+            var input = move.ReadValue<Vector2>();
+            
+            XZInput = new Vector3(input.x, 0, input.y);
+            Player.Animator.SetBool("isForward", input.y >= 0.7f);
+        }
+
+        public void GetJumpInput(InputAction.CallbackContext jump) {
+            YInput = jump.ReadValue<float>();
+        }
+        
+        public void GetSprintInput(InputAction.CallbackContext sprint) {
+            SprintInput = sprint.ReadValue<float>();
         }
         
         internal void Move() {
 
-            var velocity = _xzInput;
-            
-            velocity = _player.transform.TransformDirection(velocity);          // Convert input to world space direction.
-            velocity *= _player.MoveSpeed * SpeedMultiplier;                    // Add speed.
-            velocity.y += _yInput * _player.KickUpSpeed * KickUpMultiplier;     // Add kicking up to float speed.
-            velocity *= Time.deltaTime;                                         // Convert to frame-based velocity.
-            velocity += _externalVelocity * Time.deltaTime;                     // Factor in any external velocity.
+            var velocity = (CurrentState as IPlayerMoveState).MoveTo();
+
+            velocity += _externalVelocity * Time.deltaTime; // Factor in any external velocity.
         
-            _player.CharacterController.Move(velocity);
-            _player.CameraController.SetDutch(-_xzInput.x * DutchMultiplier, DutchDuration);
+            Player.CharacterController.Move(velocity);
+            Player.CameraController.SetDutch(-XZInput.x * DutchMultiplier, DutchDuration);
 
             _externalVelocity = Vector3.zero;
         }
@@ -50,7 +63,7 @@ namespace Entities.Player.Behaviors {
         
         /// <summary> Returns a predicted player position given the time ahead to predict to. </summary>
         public Vector3 GetPredictedPosition(float timeAhead) {
-            return timeAhead * _player.CharacterController.velocity + _player.transform.position;
+            return timeAhead * Player.CharacterController.velocity + Player.transform.position;
         }
 
         /// <summary> Add a magnitude and direction to factor in for this frame of the velocity. </summary>
@@ -58,6 +71,27 @@ namespace Entities.Player.Behaviors {
             _externalVelocity = velocity;
         }
         
+        public void ChangeState(IBaseState newState) {
+            CurrentState?.Exit();
+
+            PreviousState = CurrentState;
+            CurrentState = newState;
+			
+            CurrentState.Enter();         
+        }
+
+        public bool IsCurrentState(IBaseState state) {
+            return CurrentState.Equals(state);
+        }
+        
         #endregion
+        
+    }
+    
+    public interface IPlayerMoveState : IBaseState {
+        public PlayerMovement PlayerMovement { get; set; }
+        public Player Player { get; set; }
+        
+        public Vector3 MoveTo();
     }
 }

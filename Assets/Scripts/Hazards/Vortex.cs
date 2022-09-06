@@ -17,6 +17,10 @@ namespace Hazards {
 
         [SerializeField] private Color normalColor;
         [SerializeField] private Color enragedColor;
+
+        public Color NormalColor => normalColor;
+        public Color EnragedColor => enragedColor;
+        
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int PrimaryColor = Shader.PropertyToID("_Color");
 
@@ -29,6 +33,7 @@ namespace Hazards {
         }
 
         public void Play(Vector3 cameraDirection) {
+            // Resets
             gameObject.SetActive(true);
             tensionSound.volume = 0;
             vortexMaterial.SetFloat(Radius, 0);
@@ -62,7 +67,7 @@ namespace Hazards {
         public void SetDistanceToPlayer(float distance) {
             if(_isRecoiled) return;
             
-            tensionSound.volume = distance;
+            tensionSound.volume = Mathf.Lerp(tensionSound.volume, Mathf.Clamp01(distance + 0.2f), Time.deltaTime);
         }
     }
 }
