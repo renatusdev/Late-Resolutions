@@ -36,7 +36,6 @@ namespace Entities.Player.Behaviors {
             var input = move.ReadValue<Vector2>();
             
             XZInput = new Vector3(input.x, 0, input.y);
-            Player.Animator.SetBool("isForward", input.y >= 0.7f);
         }
 
         public void GetJumpInput(InputAction.CallbackContext jump) {
