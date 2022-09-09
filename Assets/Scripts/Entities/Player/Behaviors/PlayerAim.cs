@@ -39,12 +39,12 @@ namespace Entities.Player.Behaviors {
 
         public void AimOn() {
             _player.Animator.SetBool("isAiming", true);
-            _player.CameraController.SetFOV(75, 0.4f);        
+            _player.CameraController.SetFOVZoomIn(0.4f);        
         }
 
         public void AimOff() {
             _player.Animator.SetBool("isAiming", false);
-            _player.CameraController.SetFOV(90, 0.2f);
+            _player.CameraController.SetFOVZoomOut(0.2f);
         }
 
         public void FocusOn(Vector3 target, float duration, Ease ease, Action callback = null) {
