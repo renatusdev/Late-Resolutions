@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using Entities.Player.Behaviors;
 using Spear_Gun;
 using UnityEngine;
@@ -17,27 +18,32 @@ namespace Entities.Player {
         [Range(0, 1)] [SerializeField] private float moveSpeed;
         [Range(0, 1)] [SerializeField] private float jumpForce;
         
-        [Header("General References")]
+        [Header("References")]
+        [SerializeField] private GameObject toolHolder;
+        [SerializeField] private SpearGun spearGun;
+        
+        [Header("Components")]
         [SerializeField] private Animator animator;
         [SerializeField] private CameraController cameraController;
         [SerializeField] private PlayerInput playerInput;
         [SerializeField] private CharacterController characterController;
-        
-        [Header("???")]
-        [SerializeField] private SpearGun spearGun;
+        [SerializeField] private CinemachineImpulseSource cameraShakeOnRun;        
 
         // Component & Fields References
         public CharacterController CharacterController => characterController;
         public CameraController CameraController => cameraController;
         public Animator Animator => animator;
         public PlayerInput Input => playerInput;
+        public CinemachineImpulseSource CameraShakeOnRun => cameraShakeOnRun;
         
         public float MoveSpeed => moveSpeed;
         public float JumpForce => jumpForce;
         
-        // Behaviors
         public PlayerMovement Movement { get; set; }
         public PlayerAim Aim { get; set; }
+        public PlayerTool Tool { get; set; }
+
+        public GameObject ToolHolder => toolHolder;
         
         #endregion
 
@@ -48,11 +54,14 @@ namespace Entities.Player {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             
+            // TODO: Remove this. It should exist in the PlayerTool script.
             spearGun.Initialize(this);
             
             Movement = new PlayerMovement(this);
             Aim = new PlayerAim(this);
+            Tool = new PlayerTool(this);
 
+            Tool.Clear();
             EnableInput();
         }
         
@@ -61,8 +70,8 @@ namespace Entities.Player {
         }
 
         private void Update() {
-            Movement.Move();
-            Aim.Look();
+            Movement?.Move();
+            Aim?.Look();
             
             IsGrounded();
         }
@@ -82,6 +91,8 @@ namespace Entities.Player {
         #region Private Functions
     
         private void EnableInput() {
+            // TODO: Have a class which handles the add/remove of all these inputs.
+
             Input.actions["Move"].performed += Movement.GetMoveInput;
             Input.actions["Move"].canceled += Movement.GetMoveInput;
             Input.actions["Jump"].performed += Movement.GetJumpInput;

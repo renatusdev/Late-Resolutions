@@ -13,12 +13,6 @@ namespace Entities.Player.Behaviors {
             PlayerMovement = playerMovement;
             Player = player;
         }
-
-        public void Enter() {
-        }
-
-        public void Exit() {
-        }
         
         public Vector3 MoveTo() {
             
@@ -31,8 +25,11 @@ namespace Entities.Player.Behaviors {
             
             return velocity;
         }
-        
-        public void Execute() {
+
+        public void Enter() {
+        }
+
+        public void Exit() {
         }
     }
 }

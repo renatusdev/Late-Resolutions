@@ -1,4 +1,5 @@
 using System.Data;
+using DG.Tweening;
 using Plugins.Renatus.Util.State_Machine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -6,10 +7,10 @@ using UnityEngine.InputSystem.XR.Haptics;
 
 namespace Entities.Player.Behaviors {
 
-    public class PlayerMovement : IStateManager
+    public class PlayerMovement
     {
-        public IBaseState CurrentState { get; set; }
-        public IBaseState PreviousState { get; set; }
+        public IPlayerMoveState CurrentState { get; set; }
+        public IPlayerMoveState PreviousState { get; set; }
         
         private const float DutchDuration = 0.2f;
         private const int DutchMultiplier = 2;
@@ -48,14 +49,15 @@ namespace Entities.Player.Behaviors {
         
         internal void Move() {
 
-            var velocity = (CurrentState as IPlayerMoveState).MoveTo();
+            var velocity = CurrentState.MoveTo();
 
             velocity += _externalVelocity * Time.deltaTime; // Factor in any external velocity.
-        
-            Player.CharacterController.Move(velocity);
-            Player.CameraController.SetDutch(-XZInput.x * DutchMultiplier, DutchDuration);
 
+            Player.CharacterController.Move(velocity);
             _externalVelocity = Vector3.zero;
+            
+            // Tertiary FXs
+            Player.CameraController.SetDutch(-XZInput.x * DutchMultiplier, DutchDuration);
         }
 
         #region Public Functions
@@ -70,7 +72,7 @@ namespace Entities.Player.Behaviors {
             _externalVelocity = velocity;
         }
         
-        public void ChangeState(IBaseState newState) {
+        public void ChangeState(IPlayerMoveState newState) {
             CurrentState?.Exit();
 
             PreviousState = CurrentState;
@@ -79,18 +81,18 @@ namespace Entities.Player.Behaviors {
             CurrentState.Enter();         
         }
 
-        public bool IsCurrentState(IBaseState state) {
-            return CurrentState.Equals(state);
-        }
+        public bool IsCurrentState(IPlayerMoveState state) { return CurrentState.Equals(state); }
         
         #endregion
         
     }
     
-    public interface IPlayerMoveState : IBaseState {
+    public interface IPlayerMoveState {
         public PlayerMovement PlayerMovement { get; set; }
         public Player Player { get; set; }
         
         public Vector3 MoveTo();
+        public void Enter();
+        public void Exit();
     }
 }

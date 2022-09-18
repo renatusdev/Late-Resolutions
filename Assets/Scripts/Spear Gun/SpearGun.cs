@@ -1,5 +1,6 @@
 using Cinemachine;
 using Entities.Player;
+using Entities.Player.Holdables;
 using Plugins.Renatus.Util;
 using Plugins.Renatus.Util.FXS;
 using Plugins.Renatus.Util.State_Machine;
@@ -9,7 +10,7 @@ using UnityEngine.InputSystem;
 
 // TODO(Sergio): .Shoot(): Only shoot in shootable areas (or pointing farrr away), else, relay "x" icon in non-shootable. (Based off of raycast).
 namespace Spear_Gun {
-    public class SpearGun : MonoBehaviour, IStateManager  {
+    public class SpearGun : MonoBehaviour, IStateManager, IHoldable  {
 
         #region Fields
 

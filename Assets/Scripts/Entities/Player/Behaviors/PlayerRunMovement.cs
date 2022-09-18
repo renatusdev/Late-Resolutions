@@ -9,21 +9,25 @@ namespace Entities.Player.Behaviors {
         private const float JumpForce = 2.6f;
         private const float Gravity = -9.82f;
         private const float MaxJumpTime = 0.4f;
+        private const float TimePerStep = 0.35f;
         
         public PlayerMovement PlayerMovement { get; set; }
         public Player Player { get; set; }
 
         private float _fallingTimer;
         private float _jumpTimer;
+        private float _runTimer;
         private bool _isJumping;
         
         public PlayerRunMovement(PlayerMovement playerMovement, Player player) {
             PlayerMovement = playerMovement;
             Player = player;
+            Player.CameraShakeOnRun.m_ImpulseDefinition.m_ImpulseDuration = TimePerStep;
         }
 
         public Vector3 MoveTo() {
-            var velocity = PlayerMovement.XZInput;
+            var input = PlayerMovement.XZInput;
+            var velocity = input;
 
             velocity = Player.transform.TransformDirection(velocity);                      // Convert input to world space direction.
             
@@ -55,14 +59,23 @@ namespace Entities.Player.Behaviors {
                 }
             }
             
+            if (_runTimer > TimePerStep) {
+                _runTimer = 0;
+                OnStep();
+            }
+                
+            if(!input.Equals(Vector3.zero))
+                _runTimer += Time.deltaTime * (1 + (PlayerMovement.SprintInput * 1.1f - 1));
+
             // Horizontal speed
             velocity *= Player.MoveSpeed * RunMultiplier + (PlayerMovement.SprintInput * SprintMultiplier);
-            velocity *= Time.deltaTime;                                                     // Convert to frame-based velocity.
+            velocity *= Time.deltaTime;
             
             return velocity;
         }
-    
-        public void Execute() {
+
+        private void OnStep() {
+            Player.CameraShakeOnRun.GenerateImpulse();
         }
 
         public void Enter() {
