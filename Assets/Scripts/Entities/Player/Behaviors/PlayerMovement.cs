@@ -20,7 +20,7 @@ namespace Entities.Player.Behaviors {
         public PlayerRunMovement PlayerRunMovement { get; set; }
         
         public Player Player { get; private set; }
-        public Vector3 XZInput { get; private set; }
+        public Vector2 XZInput { get; private set; }
         public float YInput { get; private set; }
         public float SprintInput { get; private set; }
         
@@ -36,7 +36,7 @@ namespace Entities.Player.Behaviors {
         internal void GetMoveInput(InputAction.CallbackContext move) {
             var input = move.ReadValue<Vector2>();
             
-            XZInput = new Vector3(input.x, 0, input.y);
+            XZInput = new Vector2(input.x, input.y);
         }
 
         public void GetJumpInput(InputAction.CallbackContext jump) {

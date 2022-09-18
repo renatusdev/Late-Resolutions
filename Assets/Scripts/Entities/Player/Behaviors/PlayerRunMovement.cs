@@ -9,7 +9,6 @@ namespace Entities.Player.Behaviors {
         private const float JumpForce = 2.6f;
         private const float Gravity = -9.82f;
         private const float MaxJumpTime = 0.4f;
-        private const float TimePerStep = 0.35f;
         
         public PlayerMovement PlayerMovement { get; set; }
         public Player Player { get; set; }
@@ -22,12 +21,12 @@ namespace Entities.Player.Behaviors {
         public PlayerRunMovement(PlayerMovement playerMovement, Player player) {
             PlayerMovement = playerMovement;
             Player = player;
-            Player.CameraShakeOnRun.m_ImpulseDefinition.m_ImpulseDuration = TimePerStep;
+            Player.CameraShakeOnRun.m_ImpulseDefinition.m_ImpulseDuration = Player.MoveSpeed;
         }
 
         public Vector3 MoveTo() {
             var input = PlayerMovement.XZInput;
-            var velocity = input;
+            var velocity = new Vector3(input.x, 0, input.y);
 
             velocity = Player.transform.TransformDirection(velocity);                      // Convert input to world space direction.
             
@@ -59,13 +58,14 @@ namespace Entities.Player.Behaviors {
                 }
             }
             
-            if (_runTimer > TimePerStep) {
+            // TODO: Incorrect use to determine a step.
+            if (_runTimer > Player.MoveSpeed) {
                 _runTimer = 0;
-                OnStep();
+                OnStep(input);
             }
-                
-            if(!input.Equals(Vector3.zero))
-                _runTimer += Time.deltaTime * (1 + (PlayerMovement.SprintInput * 1.1f - 1));
+
+            if (!input.Equals(Vector3.zero))
+                _runTimer += Time.deltaTime + (PlayerMovement.SprintInput * Time.deltaTime);
 
             // Horizontal speed
             velocity *= Player.MoveSpeed * RunMultiplier + (PlayerMovement.SprintInput * SprintMultiplier);
@@ -74,8 +74,11 @@ namespace Entities.Player.Behaviors {
             return velocity;
         }
 
-        private void OnStep() {
-            Player.CameraShakeOnRun.GenerateImpulse();
+        private void OnStep(Vector2 direction) {
+            var cameraShake = Player.CameraShakeOnRun;
+            
+            cameraShake.GenerateImpulseWithVelocity(Vector3.up * (0.15f * -direction.y));   // Camera shake
+            cameraShake.m_ImpulseDefinition.m_ImpulseDuration = Player.MoveSpeed; // Refresh duration of shake to player speed.
         }
 
         public void Enter() {

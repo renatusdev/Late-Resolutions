@@ -16,7 +16,7 @@ namespace Entities.Player.Behaviors {
         
         public Vector3 MoveTo() {
             
-            var velocity = PlayerMovement.XZInput;
+            var velocity = new Vector3(PlayerMovement.XZInput.x, 0, PlayerMovement.XZInput.y);
             
             velocity = Player.transform.TransformDirection(velocity);                      // Convert input to world space direction.
             velocity *= Player.MoveSpeed * SwimSpeedMultiplier;                            // Add speed.

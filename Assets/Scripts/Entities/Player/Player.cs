@@ -1,10 +1,8 @@
-using System;
 using Cinemachine;
 using Entities.Player.Behaviors;
 using Spear_Gun;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Jobs;
 
 // TODO(Sergio): Mouse Sensitivity field from settings.
 namespace Entities.Player {
