@@ -22,7 +22,7 @@ Material:
     m_TexEnvs:
     - _X_Texture:
         m_Texture: {fileID: 2800000, guid: 68603ec6659d20f4cb55f9a7bd981766, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _X_Texture_Normal:
         m_Texture: {fileID: 2800000, guid: 4ad725cdb6fbefd47ba16efd45c52766, type: 3}
@@ -30,7 +30,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Y_Texture:
         m_Texture: {fileID: 2800000, guid: 520ddcfdce144504db123f7850929560, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Y_Texture_Normal:
         m_Texture: {fileID: 2800000, guid: 6306a1b9ae3d38d4293659ffa47f8aae, type: 3}
@@ -38,7 +38,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     - _Z_Texture:
         m_Texture: {fileID: 2800000, guid: 68603ec6659d20f4cb55f9a7bd981766, type: 3}
-        m_Scale: {x: 1, y: 1}
+        m_Scale: {x: 0.2, y: 0.2}
         m_Offset: {x: 0, y: 0}
     - _Z_Texture_Normal:
         m_Texture: {fileID: 2800000, guid: 4ad725cdb6fbefd47ba16efd45c52766, type: 3}
@@ -58,7 +58,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Blend: 0.454
+    - _Blend: 0.474
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors: []
