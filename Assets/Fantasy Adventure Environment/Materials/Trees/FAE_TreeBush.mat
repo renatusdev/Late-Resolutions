@@ -133,7 +133,7 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0
     - _GlossyReflections: 1
-    - _GradientBrightness: 1
+    - _GradientBrightness: 0.37
     - _MaskClipValue: 0.5
     - _MaxWindStrength: 0.25
     - _Metallic: 0
@@ -174,7 +174,7 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _HueVariation: {r: 1, g: 0.51724136, b: 0, a: 0.19607843}
+    - _HueVariation: {r: 1, g: 0.51724136, b: 0, a: 0.54509807}
     - _MainColor: {r: 0.5441177, g: 0.9052481, b: 1, a: 0}
     - _ObjectPosition: {r: 0, g: 22.15737, b: 0, a: 0}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 0}

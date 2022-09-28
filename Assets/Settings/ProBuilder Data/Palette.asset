@@ -10,16 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3f1ca63a91b17724bbd99c8fa67e0180, type: 3}
-  m_Name: Default Material Palette
+  m_Name: Palette
   m_EditorClassIdentifier: 
   array:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ffdf2a4a9f11bb7439be346ee74ca744, type: 2}
+  - {fileID: 2100000, guid: 216ff1fc330e40d4580daf9be50c8fcb, type: 2}
+  - {fileID: 2100000, guid: 012c14c656ae15f4e8b195016e418345, type: 2}
+  - {fileID: 2100000, guid: 5476b14fcd0814b41a0931206275e760, type: 2}

@@ -151,7 +151,7 @@ Material:
     - WindSpeed: 0.3
     - _AO: 0
     - _ASEOutlineWidth: 0
-    - _AmbientOcclusion: 0.15
+    - _AmbientOcclusion: 0.958
     - _BendingInfluence: 1
     - _BendingRadius: 1.5
     - _BendingStiffness: 1
@@ -162,7 +162,7 @@ Material:
     - _BumpScale: 1
     - _ColorVariation: 0.117
     - _Colorvariation: 0.729
-    - _Cutoff: 0.5
+    - _Cutoff: 0.55
     - _Debug: 0
     - _DetailNormalMapScale: 1
     - _Detailstrength: 1
@@ -226,7 +226,7 @@ Material:
     - ObstaclePosition: {r: 0, g: 0, b: 0, a: 0}
     - WindDirection: {r: 0, g: 0, b: 1, a: 0}
     - _ASEOutlineColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Color: {r: 0.31585774, g: 0.6102941, b: 0.02692473, a: 1}
+    - _Color: {r: 0.6117647, g: 0.37630504, b: 0.027450988, a: 1}
     - _ColorBottom: {r: 0.25492513, g: 0.5147059, b: 0, a: 1}
     - _ColorTop: {r: 0.31585774, g: 0.6102941, b: 0.02692473, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
