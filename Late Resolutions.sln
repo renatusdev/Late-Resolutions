@@ -5,9 +5,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-firstpass",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{0379153d-e546-adbf-a992-c25bd2929b26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.fae.editor", "sc.fae.editor.csproj", "{34014c96-ec6e-962d-52e5-7de47226ba31}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.fae.runtime", "sc.fae.runtime.csproj", "{1b8bf504-74c6-c804-c472-3cd3065d0f28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sc.fae.editor", "sc.fae.editor.csproj", "{34014c96-ec6e-962d-52e5-7de47226ba31}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor-firstpass", "Assembly-CSharp-Editor-firstpass.csproj", "{d14022d5-5c1e-fc4f-357a-dd96ca502aed}"
 EndProject
@@ -20,10 +20,10 @@ Global
 		{96a8959c-607b-7a46-4d9c-3afc112e39e2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0379153d-e546-adbf-a992-c25bd2929b26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0379153d-e546-adbf-a992-c25bd2929b26}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{34014c96-ec6e-962d-52e5-7de47226ba31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{34014c96-ec6e-962d-52e5-7de47226ba31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1b8bf504-74c6-c804-c472-3cd3065d0f28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1b8bf504-74c6-c804-c472-3cd3065d0f28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34014c96-ec6e-962d-52e5-7de47226ba31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34014c96-ec6e-962d-52e5-7de47226ba31}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{d14022d5-5c1e-fc4f-357a-dd96ca502aed}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{d14022d5-5c1e-fc4f-357a-dd96ca502aed}.Debug|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
