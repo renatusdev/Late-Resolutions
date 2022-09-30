@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FAE_Palm_B_Billboard
+  m_Name: FAE_Palm_B_Billboard Black
   m_Shader: {fileID: -6465566751694194690, guid: 7e07cc6c21cf51b4387f5678a0a21398, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
@@ -197,7 +197,7 @@ Material:
     - _HueVariation: {r: 1, g: 0.80689657, b: 0, a: 0.366}
     - _SSSColor: {r: 0.9368154, g: 1, b: 0.3455882, a: 1}
     - _SpecColor: {r: 0, g: 0, b: 0, a: 0}
-    - _Tint: {r: 1, g: 1, b: 1, a: 0}
+    - _Tint: {r: 0, g: 0, b: 0, a: 0}
     - _TranslucencyColor: {r: 0.73, g: 0.85, b: 0.41, a: 1}
     - _Transmisioncolor: {r: 0.862069, g: 1, b: 0, a: 0.259}
     - _TreeInstanceColor: {r: 1, g: 1, b: 1, a: 1}
