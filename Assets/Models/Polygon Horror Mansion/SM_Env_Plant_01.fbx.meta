@@ -54,7 +54,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
-    sortHierarchyByName: 1
+    sortHierarchyByName: 0
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
@@ -74,13 +74,13 @@ ModelImporter:
     optimizeBones: 1
     meshOptimizationFlags: 1
     indexFormat: 1
-    secondaryUVAngleDistortion: 8
-    secondaryUVAreaDistortion: 15
-    secondaryUVHardAngle: 88
+    secondaryUVAngleDistortion: 18
+    secondaryUVAreaDistortion: 23
+    secondaryUVHardAngle: 0
     secondaryUVMarginMethod: 1
-    secondaryUVMinLightmapResolution: 32
+    secondaryUVMinLightmapResolution: 20
     secondaryUVMinObjectScale: 1
-    secondaryUVPackMargin: 4
+    secondaryUVPackMargin: 1
     useFileScale: 1
   tangentSpace:
     normalSmoothAngle: 5
