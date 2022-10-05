@@ -61,11 +61,11 @@ Material:
     - _Cutoff: 0.5
     - _Depth: 7.24
     - _Depthdarkness: 0.541
-    - _EdgeFade: 0.16
+    - _EdgeFade: 0
     - _FlowSpeed: -0.5
     - _Fresnelexponent: 4
-    - _Glossiness: 0.141
-    - _Metallicness: 0.1
+    - _Glossiness: 0
+    - _Metallicness: 0.053
     - _NormalStrength: 1
     - _QueueControl: 0
     - _QueueOffset: 0
