@@ -34,15 +34,21 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Depth_Fade: 0.09
+    - _Depth_Amount: 0.86
+    - _Depth_Fade: 0.14
+    - _Depth_Start_Offset: 2.34
+    - _Horizontal_Fade: 0.54
     - _QueueControl: 0
     - _QueueOffset: 0
     - _U_Fade: 0.113
     - _U_Smoothing: 0.47
     - _V_Fade: 0
     - _V_Smoothing: 0.01
+    - _Vertical_Fade: 0.52
     m_Colors:
-    - _Color: {r: 0.24110004, g: 0.8113208, b: 0.78327715, a: 1}
+    - _Color: {r: 0.19824673, g: 0.67538923, b: 0.764151, a: 1}
+    - _Horizontal_Fade_Edge: {r: 0.5, g: 0.6, b: 0, a: 0}
+    - _Vertical_Fade_Edge: {r: 0.5, g: 0.6, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &8233501131270722563
 MonoBehaviour:
