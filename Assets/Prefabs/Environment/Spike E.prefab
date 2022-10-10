@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4109127419596516800}
   - component: {fileID: 5243544546049721485}
   - component: {fileID: 3904451280916506359}
+  - component: {fileID: 1139092398314632771}
   m_Layer: 0
   m_Name: Spike E
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &1139092398314632771
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5420971806977287873}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.39909652, y: 0.46051285, z: 0.46083736}
+  m_Center: {x: -0.016889036, y: 0.23030914, z: -0.003227502}

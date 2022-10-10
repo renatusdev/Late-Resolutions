@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 9098535391570246835}
   - component: {fileID: 7453553639680674823}
   - component: {fileID: 4407383501337315469}
+  - component: {fileID: 8352892155532819936}
   m_Layer: 0
   m_Name: Spike A
   m_TagString: Untagged
@@ -83,3 +84,16 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8352892155532819936
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8041547099304437544}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5201235, y: 1.0261354, z: 0.5357492}
+  m_Center: {x: 0.038025863, y: 0.5045154, z: 0.033670254}
